@@ -16,16 +16,22 @@ export default function userLogin() {
     // onSubmit: onSubmit
     onSubmit,
   });
-  console.log(formik.errors);
+ 
 
   async function onSubmit(values) {
     const result = await axios.post(
       "http://localhost:3000/api/auth/login",
       values
+     
     );
-    const isToken = result.data;
-    if (isToken) {
-    }
+    
+    console.log(result)
+    if(result.status === 200){
+    Router.push('/user')
+   }
+   else{
+    alert("User Name or password is incorrect")
+   }
   }
 
   return (

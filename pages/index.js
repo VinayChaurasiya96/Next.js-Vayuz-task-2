@@ -1,13 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import UserGuest from './UserGuest'
-import UserList from './UserList'
+
 import { useState } from 'react'
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "USERSAPI";
 const REFRESH_SECRET_KEY = "USERSAPIREFRESH";
-
 
 
 export const refreshTokens = [];
@@ -25,6 +21,9 @@ export const createToken=(email,password)=>{
   return token;
 }
 
+/**
+ * 
+ */
 export const refreshToken=(email,password)=>{
   const token = jwt.sign(
     {email: email, password:password},
@@ -67,7 +66,7 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-         {session ? UserList() : UserGuest() }
+        
       </div>
     </>
   )

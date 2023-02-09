@@ -8,7 +8,8 @@ const connectMongo = async()=>{
       console.log("err");
       console.log(err);
     } else {
-      console.log("Connection Established !!");
+      
+      // console.log("Connection Established !!");
     }
   });
  }catch(err){

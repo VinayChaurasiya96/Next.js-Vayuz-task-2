@@ -1,10 +1,15 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 function usersList() {
   const [user, setUser] = useState();
 
+  /**
+   * desc fetching all data
+   * @returns 
+   */
   const fetchData = () => {
     return fetch("http://localhost:3000/api/auth/users")
           .then((response) => response.json())
@@ -17,11 +22,29 @@ function usersList() {
 
   },[])
   
-  console.log(user)
+/**
+ * desc delete user handler
+ * @param {*} user 
+ */
+const  deleteHandle = async(user)=>{
+  try{
+    // delete user 
+
+  console.log(user._id)
+   const result =  await axios.post(`http://localhost:3000/api/auth/deleteUser/${user._id}`)  
+  //  console.log(result)
+
+  }
+ catch(err){
+    console.log(err)
+ }
+}
+
+
   return (
     <div>
        <div className="flex items-end">
-       <button className="btn btn-red"><Link href="/user/edit" >Add User</Link></button>
+       <button className="btn btn-red"><Link href="/userAdd" >Add User</Link></button>
         <button className="btn btn-red"><Link href="userLogin">Logout</Link></button>
        </div>
       
@@ -38,10 +61,10 @@ function usersList() {
                      
                 
                     <tr  key={i+1} className="user">
-                      <th>{data.username}</th>
-                      <th>{data.email}</th>
-                      <th>{data.password}</th>
-                      <th><Link href={`/user/edit/${data._id}`}>Edit</Link> <Link href="">Delete</Link></th>
+                      <td>{data.username}</td>
+                      <td>{data.email}</td>
+                      <td>{data.password}</td>
+                      <td><Link href={`/user/edit/${data._id}`}>Edit</Link> <button onClick={()=>deleteHandle(data)}>Delete</button></td>
                     </tr>
                 
               ))}
