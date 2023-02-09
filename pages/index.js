@@ -1,14 +1,62 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import UserGuest from './UserGuest'
 import UserList from './UserList'
 import { useState } from 'react'
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "USERSAPI";
+const REFRESH_SECRET_KEY = "USERSAPIREFRESH";
 
-const inter = Inter({ subsets: ['latin'] })
+
+
+export const refreshTokens = [];
+/**
+ * desc Create token
+ * @param {*} email 
+ * @param {*} password 
+ */
+export const createToken=(email,password)=>{
+  const token = jwt.sign(
+    {email: email, password:password},
+    SECRET_KEY,
+    {expiresIn: "30s"}
+  );
+  return token;
+}
+
+export const refreshToken=(email,password)=>{
+  const token = jwt.sign(
+    {email: email, password:password},
+    REFRESH_SECRET_KEY
+  );
+  return token;
+}
+
+/**
+ * desc verify Token
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+export const verifyToken = (req,res,next)=>{
+  const authHeader = req.headers.authorization;
+  if(authHeader){
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token,SECRET_KEY,(err,user)=>{
+        if(err){
+          return res.status(403).json("token is not valid")
+        }
+        req.user = user;
+        next();
+    })
+  }else{
+    res.status(401).json("You are not Authorized")
+  }
+}
 
 export default function Home() {
+  
   const [session,setSession] = useState(false);
   return (
     <>

@@ -1,0 +1,30 @@
+import connectMongo from "@/Database/connections";
+import  CredentialsProvider  from "next-auth/providers";
+
+export default NextAuth({
+    providers:[
+        CredentialsProvider:({
+            name:"Credentials",
+            async authorize(Credentials,req){
+                connectMongo()
+
+                // check user existence 
+                const result  = await userAgent.findOne({email:Credentials.email})
+                if(!result){
+                    throw new Error("No User Found with this Email , please signup ...!");
+                }
+                
+                //encrpt password
+                const checkPassword = await compare(Credentials.password, result.password)
+                // check password
+                if(!checkPassword || result.email !== Credentials.email){
+                    throw new Error ("username or password doest not match  ")
+                }
+
+                return result ;
+
+            }
+        })
+    ]
+})
+
