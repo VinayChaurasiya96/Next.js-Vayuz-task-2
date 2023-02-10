@@ -2,9 +2,9 @@ import connectMongo from "../../../Database/connections";
 import Users from "../../../Models/Schemas";
 
 /**
- * desc Get all Users 
- * @param {*} req 
- * @param {*} res 
+ * desc Get all Users
+ * @param {*} req
+ * @param {*} res
  */
 export default async function handler(req, res) {
   connectMongo();

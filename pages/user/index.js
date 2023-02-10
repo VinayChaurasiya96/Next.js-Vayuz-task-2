@@ -8,7 +8,7 @@ function usersList() {
 
   /**
    * desc fetching all data
-   * @returns 
+   * @returns all users
    */
   const fetchData = () => {
     return fetch("http://localhost:3000/api/auth/users")

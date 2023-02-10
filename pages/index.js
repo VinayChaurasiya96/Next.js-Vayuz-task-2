@@ -22,7 +22,10 @@ export const createToken=(email,password)=>{
 }
 
 /**
- * 
+ * desc refresh token
+ * @param {*} email 
+ * @param {*} password 
+ * @returns 
  */
 export const refreshToken=(email,password)=>{
   const token = jwt.sign(

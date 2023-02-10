@@ -3,6 +3,13 @@ import Users from "../../../Models/Schemas";
 import {hash} from "bcryptjs";
 import {createToken} from "../../index";
 
+
+/**
+ * @desc Add users Route
+ * @param {*} req username,email,password, confirm password
+ * @param {*} res 
+ * @returns 
+ */
 export default async function handler(req, res) {
   connectMongo();
 
